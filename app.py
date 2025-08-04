@@ -22,7 +22,7 @@ st.set_page_config(
 )
 
 st.title("🧠 Personality Prediction Dashboard")
-st.write("Predict if you are an **Introvert** or **Extrovert**using AI!")
+st.write("Predict if you are an **Introvert** or **Extrovert** using AI!")
 
 # -------------------------
 # 3. Sidebar Input
