@@ -6,6 +6,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import io
 import numpy as np
+import streamlit.components.v1 as components
 
 # -------------------------
 # 1. Load Model
@@ -31,15 +32,38 @@ st.write("Predict if you are an **Introvert** or **Extrovert** using AI!")
 # -------------------------
 # 3. Sidebar Input
 # -------------------------
-st.sidebar.header("🔧 Input Your Data")
 
-time_spent_alone = st.sidebar.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
-friends_circle_size = st.sidebar.slider("👥 Close friends count", 0, 50, 10)
-social_event_attendance = st.sidebar.slider("🎉 Social events per month", 0, 20, 2)
-post_frequency = st.sidebar.slider("📱 Social media posts per month", 0, 100, 7)
-going_outside = st.sidebar.slider("🚶 Times you go outside per week", 0, 30, 3)
-stage_fear = st.sidebar.radio("🎤 Stage fear?", ["Yes", "No"])
-drained_after_socializing = st.sidebar.radio("😓 Drained after socializing?", ["Yes", "No"])
+def is_mobile_device():
+    # Use st.query_params instead of deprecated st.experimental_get_query_params
+    user_agent = st.query_params.get('user-agent', [''])[0] if hasattr(st, 'query_params') else ''
+    if not user_agent:
+        user_agent = ''
+    ua = user_agent.lower()
+    return any(x in ua for x in ['android', 'iphone', 'ipad', 'mobile'])
+
+is_mobile = is_mobile_device()
+
+if is_mobile:
+    st.header("🔧 Input Your Data")
+    with st.form("input_form"):
+        time_spent_alone = st.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
+        friends_circle_size = st.slider("👥 Close friends count", 0, 50, 10)
+        social_event_attendance = st.slider("🎉 Social events per month", 0, 20, 2)
+        post_frequency = st.slider("📱 Social media posts per month", 0, 100, 7)
+        going_outside = st.slider("🚶 Times you go outside per week", 0, 30, 3)
+        stage_fear = st.radio("🎤 Stage fear?", ["Yes", "No"])
+        drained_after_socializing = st.radio("😓 Drained after socializing?", ["Yes", "No"])
+        submitted = st.form_submit_button("🔮 Predict Personality")
+else:
+    st.sidebar.header("🔧 Input Your Data")
+    time_spent_alone = st.sidebar.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
+    friends_circle_size = st.sidebar.slider("👥 Close friends count", 0, 50, 10)
+    social_event_attendance = st.sidebar.slider("🎉 Social events per month", 0, 20, 2)
+    post_frequency = st.sidebar.slider("📱 Social media posts per month", 0, 100, 7)
+    going_outside = st.sidebar.slider("🚶 Times you go outside per week", 0, 30, 3)
+    stage_fear = st.sidebar.radio("🎤 Stage fear?", ["Yes", "No"])
+    drained_after_socializing = st.sidebar.radio("😓 Drained after socializing?", ["Yes", "No"])
+    submitted = st.sidebar.button("🔮 Predict Personality")
 
 input_data = pd.DataFrame([{
     "Time_spent_Alone": time_spent_alone,
@@ -54,7 +78,7 @@ input_data = pd.DataFrame([{
 # -------------------------
 # 4. Prediction
 # -------------------------
-if st.sidebar.button("🔮 Predict Personality"):
+if submitted:
     prediction = model.predict(input_data)[0]
     proba = model.predict_proba(input_data)[0]
     class_labels = model.classes_
