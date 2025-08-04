@@ -155,13 +155,13 @@ if submitted:
     fig_report.update_yaxes(range=[0, 1], row=1, col=2)
     fig_report.update_layout(height=500, width=1200)
 
-    # Save to buffer for download
-    buf = io.BytesIO(fig_report.to_image(format="png"))
+    # Show the combined figure interactively
+    st.plotly_chart(fig_report, use_container_width=True)
 
-    # Download button
+    # Optionally, add CSV download for probabilities
     st.download_button(
-        label="📥 Download Prediction Report as PNG",
-        data=buf,
-        file_name="personality_report.png",
-        mime="image/png"
+        label="📥 Download Probabilities as CSV",
+        data=prob_df.to_csv(index=False).encode(),
+        file_name="personality_probabilities.csv",
+        mime="text/csv"
     )
