@@ -43,27 +43,17 @@ def is_mobile_device():
 
 is_mobile = is_mobile_device()
 
-if is_mobile:
-    st.header("🔧 Input Your Data")
-    with st.form("input_form"):
-        time_spent_alone = st.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
-        friends_circle_size = st.slider("👥 Close friends count", 0, 50, 10)
-        social_event_attendance = st.slider("🎉 Social events per month", 0, 20, 2)
-        post_frequency = st.slider("📱 Social media posts per month", 0, 100, 7)
-        going_outside = st.slider("🚶 Times you go outside per week", 0, 30, 3)
-        stage_fear = st.radio("🎤 Stage fear?", ["Yes", "No"])
-        drained_after_socializing = st.radio("😓 Drained after socializing?", ["Yes", "No"])
-        submitted = st.form_submit_button("🔮 Predict Personality")
-else:
-    st.sidebar.header("🔧 Input Your Data")
-    time_spent_alone = st.sidebar.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
-    friends_circle_size = st.sidebar.slider("👥 Close friends count", 0, 50, 10)
-    social_event_attendance = st.sidebar.slider("🎉 Social events per month", 0, 20, 2)
-    post_frequency = st.sidebar.slider("📱 Social media posts per month", 0, 100, 7)
-    going_outside = st.sidebar.slider("🚶 Times you go outside per week", 0, 30, 3)
-    stage_fear = st.sidebar.radio("🎤 Stage fear?", ["Yes", "No"])
-    drained_after_socializing = st.sidebar.radio("😓 Drained after socializing?", ["Yes", "No"])
-    submitted = st.sidebar.button("🔮 Predict Personality")
+# Move the input form to the main page for all users
+st.header("🔧 Input Your Data")
+with st.form("input_form"):
+    time_spent_alone = st.slider("⏳ Time spent alone (hours/day)", 0, 24, 5)
+    friends_circle_size = st.slider("👥 Close friends count", 0, 50, 10)
+    social_event_attendance = st.slider("🎉 Social events per month", 0, 20, 2)
+    post_frequency = st.slider("📱 Social media posts per month", 0, 100, 7)
+    going_outside = st.slider("🚶 Times you go outside per week", 0, 30, 3)
+    stage_fear = st.radio("🎤 Stage fear?", ["Yes", "No"])
+    drained_after_socializing = st.radio("😓 Drained after socializing?", ["Yes", "No"])
+    submitted = st.form_submit_button("🔮 Predict Personality")
 
 input_data = pd.DataFrame([{
     "Time_spent_Alone": time_spent_alone,
