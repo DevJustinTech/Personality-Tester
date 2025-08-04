@@ -159,9 +159,9 @@ if submitted:
     st.plotly_chart(fig_report, use_container_width=True)
 
     # Optionally, add CSV download for probabilities
-    st.download_button(
-        label="📥 Download Probabilities as CSV",
-        data=prob_df.to_csv(index=False).encode(),
-        file_name="personality_probabilities.csv",
-        mime="text/csv"
-    )
+    # st.download_button(
+    #     label="📥 Download Probabilities as CSV",
+    #     data=prob_df.to_csv(index=False).encode(),
+    #     file_name="personality_probabilities.csv",
+    #     mime="text/csv"
+    # )
