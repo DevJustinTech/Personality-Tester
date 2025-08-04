@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import joblib
+
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -10,7 +10,11 @@ import numpy as np
 # -------------------------
 # 1. Load Model
 # -------------------------
-model = joblib.load("tuned_personality_model.pkl")
+import cloudpickle
+
+with open("tuned_personality_model.pk2.0", "rb") as f:
+    model = cloudpickle.load(f)
+
 
 # -------------------------
 # 2. Streamlit Page Config
